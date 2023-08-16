@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma Self-Healing</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <link rel="stylesheet" type="text/css" href="styles.css">
+
+</head>
+<body>
+
+<h1 class="page-title">Plataforma Self-Healing</h1>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-3 left-panel">
+            <div class="menu-item" onclick="toggleMenuItem('selfHealingContent')">
+                Self-Healing &#x25BC;
+            </div>
+            <div class="menu-item-content" id="selfHealingContent">
+                <a href="#" onclick="showContent('cadastro')">Cadastrar</a><br>
+                <a href="#">Histórico</a><br>
+                <a href="#">Execução</a><br>
+            </div>
+        </div>
+        <div class="col-9" id="mainContent">
+            <div class="central-content" id="cadastro">
+                <h2>Cadastro</h2>
+                <form>
+                    <div class="form-group">
+                        <label for="hostname">Hostname</label>
+                        <input type="text" class="form-control" id="hostname" placeholder="Digite o hostname">
+                    </div>
+                    <div class="form-group">
+                        <label for="ip">IP</label>
+                        <input type="text" class="form-control" id="ip" placeholder="Digite o IP">
+                    </div>
+                    <div class="form-group">
+                        <label for="acao">Ação</label>
+                        <select class="form-control" id="acao">
+                            <option value="reiniciar_servico">Reiniciar Serviço</option>
+                            <option value="reinstalar_pacote">Reinstalar Pacote</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="servico">Serviço</label>
+                        <input type="text" class="form-control" id="servico" placeholder="Digite o serviço">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Cadastrar</button>
+                </form>
+            </div>            
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleMenuItem(id) {
+        var content = document.getElementById(id);
+        if(content.style.display === 'none' || content.style.display === '') {
+            content.style.display = 'block';
+        } else {
+            content.style.display = 'none';
+        }
+    }
+
+    function showContent(id) {
+        var contents = document.querySelectorAll('.central-content');
+        for(var i = 0; i < contents.length; i++) {
+            contents[i].style.display = 'none';
+        }
+
+        var contentToShow = document.getElementById(id);
+        if(contentToShow) {
+            contentToShow.style.display = 'block';
+        }
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+secretGenerator:
+  - name: awx-postgres-configuration
+    type: Opaque
+    literals:
+      - host=awxdb.cpr5hljpojnd.us-east-1.rds.amazonaws.com
+      - port=5432
+      - database=awxdb
+      - username=postgres
+      - password=dbpassword11
+      - sslmode=prefer
+      - type=unmanaged
+
+  - name: awx-admin-password
+    type: Opaque
+    literals:
+      - password=Ansible123!
+
+resources:
+  # Find the latest tag here: https://github.com/ansible/awx-operator/releases
+  - github.com/ansible/awx-operator/config/default?ref=0.20.0
+  - awx-ingress.yaml
+
+# Set the image tags to match the git version from above
+images:
+  - name: quay.io/ansible/awx-operator
+    newTag: 0.20.0
+
+# Specify a custom namespace in which to install AWX
+namespace: awx
