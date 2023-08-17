@@ -1,0 +1,27 @@
+[PORTO-PRD-SEGURO]
+autoprd01 ansible_host="172.31.91.2" vertical="Seguros" empresa="Porto" ambiente="PRD" app="Auto" status="enabled"
+autoprd02 ansible_host="172.31.91.3" vertical="Seguros" empresa="Porto" ambiente="PRD" app="Auto" status="enabled"
+autoprd03 ansible_host="172.31.91.4" vertical="Seguros" empresa="Porto" ambiente="PRD" app="Auto" status="enabled"
+autoprd04 ansible_host="172.31.91.29" vertical="Seguros" empresa="Porto" ambiente="PRD" app="Auto" status="disabled"
+resprd01 ansible_host="172.31.91.20" vertical="Seguros" empresa="Porto" ambiente="PRD" app="Residencial" status="enabled"
+resprd02 ansible_host="172.31.91.21" vertical="Seguros" empresa="Porto" ambiente="PRD" app="Residencial" status="enabled"
+resprd03 ansible_host="172.31.91.22" vertical="Seguros" empresa="Porto" ambiente="PRD" app="Residencial" status="enabled"
+resprd03 ansible_host="172.31.91.23" vertical="Seguros" empresa="Porto" ambiente="PRD" app="Residencial" status="disabled"
+
+[PORTO-PRD-BANK]
+bankprd01 ansible_host="172.31.91.5" vertical="Bank" empresa="Porto" ambiente="PRD" app="Consorcio" status="enabled"
+bankprd02 ansible_host="172.31.91.6" vertical="Bank" empresa="Porto" ambiente="PRD" app="Consorcio" status="enabled"
+bankprd03 ansible_host="172.31.91.7" vertical="Bank" empresa="Porto" ambiente="PRD" app="Consorcio" status="enabled"
+bankprd03 ansible_host="172.31.91.31" vertical="Bank" empresa="Porto" ambiente="PRD" app="Consorcio" status="disabled"
+
+[PORTO-PRD-SAUDE]
+saudeprd01 ansible_host="172.31.91.8" vertical="Saude" empresa="Porto" ambiente="PRD" app="Saude" status="enabled"
+saudeprd02 ansible_host="172.31.91.9" vertical="Saude" empresa="Porto" ambiente="PRD" app="Saude" status="enabled"
+saudeprd03 ansible_host="172.31.91.10" vertical="Saude" empresa="Porto" ambiente="PRD" app="Saude" status="enabled"
+saudeprd03 ansible_host="172.31.91.32" vertical="Saude" empresa="Porto" ambiente="PRD" app="Saude" status="disabled"
+
+[PORTO-PRD-CORP]
+corpprd01 ansible_host="172.31.91.11" vertical="Corporativo" empresa="Porto" ambiente="PRD" app="Atendimento" status="enabled"
+corpprd02 ansible_host="172.31.91.12" vertical="Corporativo" empresa="Porto" ambiente="PRD" app="Atendimento" status="enabled"
+corpprd03 ansible_host="172.31.91.13" vertical="Corporativo" empresa="Porto" ambiente="PRD" app="Atendimento" status="enabled"
+corpprd03 ansible_host="172.31.91.33" vertical="Corporativo" empresa="Porto" ambiente="PRD" app="Atendimento" status="disabled"

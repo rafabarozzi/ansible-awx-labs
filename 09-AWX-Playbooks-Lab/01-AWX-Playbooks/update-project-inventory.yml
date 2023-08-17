@@ -1,0 +1,10 @@
+---
+- name: Atualizar Projeto no AWX
+  hosts: localhost
+  gather_facts: false
+  vars:
+    awx_api_token: "WfhKgSHQKUXU6PlbvU5mPxU8tywiCS"
+
+  tasks:
+    - name: Executar comando curl
+      command: "curl -k -X POST 'https://awx.rbarozzi.com/api/v2/projects/30/update/' -H 'Content-Type: application/json' -H 'Authorization: Bearer {{ awx_api_token }}'"

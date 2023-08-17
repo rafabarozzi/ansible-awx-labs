@@ -1,0 +1,22 @@
+[PORTO-DEV-SEGURO]
+autodev01 ansible_host="172.31.81.2" vertical="Seguros" empresa="Porto" ambiente="DEV" app="Auto" status="enabled"
+autodev02 ansible_host="172.31.81.3" vertical="Seguros" empresa="Porto" ambiente="DEV" app="Auto" status="enabled"
+autodev03 ansible_host="172.31.81.4" vertical="Seguros" empresa="Porto" ambiente="DEV" app="Auto" status="enabled"
+resdev01 ansible_host="172.31.81.20" vertical="Seguros" empresa="Porto" ambiente="DEV" app="Residencial" status="enabled"
+resdev02 ansible_host="172.31.81.21" vertical="Seguros" empresa="Porto" ambiente="DEV" app="Residencial" status="enabled"
+resdev03 ansible_host="172.31.81.22" vertical="Seguros" empresa="Porto" ambiente="DEV" app="Residencial" status="enabled"
+
+[PORTO-DEV-BANK]
+bankdev01 ansible_host="172.31.81.5" vertical="Bank" empresa="Porto" ambiente="DEV" app="Consorcio" status="enabled"
+bankdev02 ansible_host="172.31.81.6" vertical="Bank" empresa="Porto" ambiente="DEV" app="Consorcio" status="enabled"
+bankdev03 ansible_host="172.31.81.7" vertical="Bank" empresa="Porto" ambiente="DEV" app="Consorcio" status="enabled"
+
+[PORTO-DEV-SAUDE]
+saudedev01 ansible_host="172.31.81.8" vertical="Saude" empresa="Porto" ambiente="DEV" app="Saude" status="enabled"
+saudedev02 ansible_host="172.31.81.9" vertical="Saude" empresa="Porto" ambiente="DEV" app="Saude" status="enabled"
+saudedev03 ansible_host="172.31.81.10" vertical="Saude" empresa="Porto" ambiente="DEV" app="Saude" status="enabled"
+
+[PORTO-DEV-CORP]
+corpdev01 ansible_host="172.31.81.11" vertical="Corporativo" empresa="Porto" ambiente="DEV" app="Atendimento" status="enabled"
+corpdev02 ansible_host="172.31.81.12" vertical="Corporativo" empresa="Porto" ambiente="DEV" app="Atendimento" status="enabled"
+corpdev03 ansible_host="172.31.81.13" vertical="Corporativo" empresa="Porto" ambiente="DEV" app="Atendimento" status="enabled"

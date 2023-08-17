@@ -1,0 +1,27 @@
+[PORTO-HML-SEGURO]
+autohml01 ansible_host="172.31.91.2" vertical="Seguros" empresa="Porto" ambiente="HML" app="Auto" status="enabled"
+autohml02 ansible_host="172.31.91.3" vertical="Seguros" empresa="Porto" ambiente="HML" app="Auto" status="enabled"
+autohml03 ansible_host="172.31.91.4" vertical="Seguros" empresa="Porto" ambiente="HML" app="Auto" status="enabled"
+autohml04 ansible_host="172.31.91.29" vertical="Seguros" empresa="Porto" ambiente="HML" app="Auto" status="disabled"
+reshml01 ansible_host="172.31.91.20" vertical="Seguros" empresa="Porto" ambiente="HML" app="Residencial" status="enabled"
+reshml02 ansible_host="172.31.91.21" vertical="Seguros" empresa="Porto" ambiente="HML" app="Residencial" status="enabled"
+reshml03 ansible_host="172.31.91.22" vertical="Seguros" empresa="Porto" ambiente="HML" app="Residencial" status="enabled"
+reshml03 ansible_host="172.31.91.23" vertical="Seguros" empresa="Porto" ambiente="HML" app="Residencial" status="disabled"
+
+[PORTO-HML-BANK]
+bankhml01 ansible_host="172.31.91.5" vertical="Bank" empresa="Porto" ambiente="HML" app="Consorcio" status="enabled"
+bankhml02 ansible_host="172.31.91.6" vertical="Bank" empresa="Porto" ambiente="HML" app="Consorcio" status="enabled"
+bankhml03 ansible_host="172.31.91.7" vertical="Bank" empresa="Porto" ambiente="HML" app="Consorcio" status="enabled"
+bankhml03 ansible_host="172.31.91.31" vertical="Bank" empresa="Porto" ambiente="HML" app="Consorcio" status="disabled"
+
+[PORTO-HML-SAUDE]
+saudehml01 ansible_host="172.31.91.8" vertical="Saude" empresa="Porto" ambiente="HML" app="Saude" status="enabled"
+saudehml02 ansible_host="172.31.91.9" vertical="Saude" empresa="Porto" ambiente="HML" app="Saude" status="enabled"
+saudehml03 ansible_host="172.31.91.10" vertical="Saude" empresa="Porto" ambiente="HML" app="Saude" status="enabled"
+saudehml03 ansible_host="172.31.91.32" vertical="Saude" empresa="Porto" ambiente="HML" app="Saude" status="disabled"
+
+[PORTO-HML-CORP]
+corphml01 ansible_host="172.31.91.11" vertical="Corporativo" empresa="Porto" ambiente="HML" app="Atendimento" status="enabled"
+corphml02 ansible_host="172.31.91.12" vertical="Corporativo" empresa="Porto" ambiente="HML" app="Atendimento" status="enabled"
+corphml03 ansible_host="172.31.91.13" vertical="Corporativo" empresa="Porto" ambiente="HML" app="Atendimento" status="enabled"
+corphml03 ansible_host="172.31.91.33" vertical="Corporativo" empresa="Porto" ambiente="HML" app="Atendimento" status="disabled"

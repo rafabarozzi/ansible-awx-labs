@@ -1,0 +1,10 @@
+# ---
+# - name: Git Pull Admawx
+#   hosts: localhost
+#   tasks:
+#     - name: Atualizar o repositório Admawx
+#       git:
+#         repo: git@gitlab.com:rbarozzi/awxlab.git
+#         dest: /var/lib/awx/projects/awxlab
+#         version: main
+#         update: yes

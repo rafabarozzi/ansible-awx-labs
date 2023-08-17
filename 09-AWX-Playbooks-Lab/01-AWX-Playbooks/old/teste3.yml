@@ -1,0 +1,95 @@
+---
+- name: Check and Create/Update AWX Inventories via API
+  hosts: localhost
+  gather_facts: false
+  vars:
+    awx_api_token: "WfhKgSHQKUXU6PlbvU5mPxU8tywiCS"
+    git_repo_dest: "/var/lib/awx/projects/inventory/"
+
+  tasks:
+    - name: Update Git repository
+      git:
+        repo: "git@gitlab.com:rbarozzi/inventory.git"
+        dest: "{{ git_repo_dest }}"
+        version: "HEAD"
+        update: yes
+      register: git_update_result
+
+    - name: Get the list of changed files
+      command: "git --git-dir={{ git_repo_dest }}.git --work-tree={{ git_repo_dest }} diff --name-only HEAD^ HEAD"
+      register: changed_files
+      when: git_update_result.changed
+
+    - name: Set changed files as a variable
+      set_fact:
+        changed_files_list: "{{ changed_files.stdout_lines }}"
+
+    # - name: Display changed files
+    #   debug:
+    #     var: changed_files_list
+    #   when: changed_files.changed
+
+    # - name: Read inventory file
+    #   shell: cat "/var/lib/awx/projects/inventory/{{ item }}"
+    #   register: inventory_content
+    #   ignore_errors: yes
+    #   with_items: "{{ changed_files_list }}"
+    
+    - name: Get organization ID
+      uri:
+        url: "https://awx.rbarozzi.com/api/v2/organizations/"
+        headers:
+          Authorization: "Bearer {{ awx_api_token }}"
+      register: organization_result
+      delegate_to: localhost
+      ignore_errors: yes
+
+    - name: Get existing inventories
+      uri:
+        url: "https://awx.rbarozzi.com/api/v2/inventories/"
+        headers:
+          Authorization: "Bearer {{ awx_api_token }}"
+      register: existing_inventories
+      delegate_to: localhost
+      ignore_errors: yes
+    
+    # - name: Display existing inventory names
+    #   debug:
+    #     msg: "{{ item }}"
+    #   loop: "{{ existing_inventories.json.results | map(attribute='name') | list }}"
+    #   when: existing_inventories.status == 200
+
+    - name: Set inventory names as a variable
+      set_fact:
+        inventory_names_list: "{{ existing_inventories.json.results | map(attribute='name') | list }}"
+      when: existing_inventories.status == 200
+
+    # - name: Display inventory names
+    #   debug:
+    #     var: inventory_names_list
+
+    # - name: Display inventory names
+    #   debug:
+    #     msg: "{{ item }}"
+    #   with_items: "{{ changed_files_list }}"
+
+    - name: Check and Create inventories
+      uri:
+        url: "https://awx.rbarozzi.com/api/v2/inventories/"
+        method: POST
+        headers:
+          Authorization: "Bearer {{ awx_api_token }}"
+        body_format: json
+        body:
+          name: "{{ item }}"
+          organization: "{{ organization_result.json.results[0].id }}"
+          description: "{{ item }}"
+      with_items: "{{ changed_files_list }}"
+      register: inventory_creation_result
+      failed_when: inventory_creation_result.status != 200 and inventory_creation_result.status != 201
+      when: "'{{ item }}' not in inventory_names_list"
+
+
+
+
+

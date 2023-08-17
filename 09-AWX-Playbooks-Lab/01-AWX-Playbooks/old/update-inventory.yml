@@ -1,0 +1,70 @@
+---
+- name: Check and Create/Update AWX Inventories via API
+  hosts: localhost
+  gather_facts: false
+  vars:
+    awx_api_token: "WfhKgSHQKUXU6PlbvU5mPxU8tywiCS"
+    git_repo_dest: "/var/lib/awx/projects/inventory/"
+
+  tasks:
+    - name: Update Git repository
+      git:
+        repo: "git@gitlab.com:rbarozzi/inventory.git"
+        dest: "{{ git_repo_dest }}"
+        version: "HEAD"
+        update: yes
+      register: git_update_result
+
+    - name: Get the list of changed files
+      command: "git --git-dir={{ git_repo_dest }}.git --work-tree={{ git_repo_dest }} diff --name-only HEAD^ HEAD"
+      register: changed_files
+      when: git_update_result.changed
+
+    - name: Set changed files list to a variable
+      set_fact:
+        changed_files_list: "{{ changed_files.stdout_lines }}"
+
+    - name: Read inventory file
+      shell: cat "{{ git_repo_dest }}/{{ item }}"
+      register: inventory_content
+      ignore_errors: yes
+      loop: "{{ changed_files_list }}"
+
+    - name: Parse inventory content
+      set_fact:
+        parsed_inventory: "{{ inventory_content.stdout_lines }}"
+      ignore_errors: yes
+
+    - name: Get organization ID
+      uri:
+        url: "https://awx.rbarozzi.com/api/v2/organizations/"
+        headers:
+          Authorization: "Bearer {{ awx_api_token }}"
+      register: organization_result
+      delegate_to: localhost
+      ignore_errors: yes
+
+    - name: Get existing inventories
+      uri:
+        url: "https://awx.rbarozzi.com/api/v2/inventories/"
+        headers:
+          Authorization: "Bearer {{ awx_api_token }}"
+      register: existing_inventories
+      delegate_to: localhost
+      ignore_errors: yes
+
+    - name: Check and Create inventories
+      uri:
+        url: "https://awx.rbarozzi.com/api/v2/inventories/"
+        method: POST
+        headers:
+          Authorization: "Bearer {{ awx_api_token }}"
+        body_format: json
+        body:
+          name: "{{ item | regex_replace('\\[(.*)\\]', '\\1') }}"
+          organization: "{{ organization_result.json.results[0].id }}"
+          description: "Descrição do Novo Inventory"
+      loop: "{{ parsed_inventory }}"
+      when: item | regex_search('\\[.*\\]') and
+            item | regex_replace('\\[(.*)\\]', '\\1') not in existing_inventories.json.results | map(attribute='name') | list
+      ignore_errors: yes

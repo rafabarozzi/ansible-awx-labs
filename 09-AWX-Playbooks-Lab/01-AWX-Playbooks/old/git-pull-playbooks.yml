@@ -1,0 +1,10 @@
+---
+- name: Git Pull Playbooks
+  hosts: localhost
+  tasks:
+    - name: Atualizar o repositório Playbook
+      git:
+        repo: git@gitlab.com:rbarozzi/playbooks.git
+        dest: /var/lib/awx/projects/playbooks
+        version: main
+        update: yes
