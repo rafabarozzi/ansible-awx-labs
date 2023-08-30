@@ -271,6 +271,124 @@ A*MI3jZx@77BffSGW84eh
 W@k1RREInG*q2lDmY2tF0
 ```
 
+## Obter token da API do AWX
 
+``` 
+curl -X POST -u admin:password -k https://awx.rbarozzi.com/api/v2/tokens
+```
 
-Instance Group --> Iventario -> Host --> Adicionar ao Instance Group 
+# Ansible no Windows
+
+``` 
+#Verificar versão do Python que o Ansible usa
+ansible --version
+
+#Pre-reqs
+dnf -y install gcc python3-devel krb5-devel krb5-libs krb5-workstation
+sudo yum install python3.11-devel
+sudo yum groupinstall "Development Tools"
+
+#Instalar o pip3.11
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+python3.11 get-pip.py
+
+#Instalar pywinrm, kerberos e requests
+pip3.11 install pywinrm
+pip3.11 install requests
+pip3.11 install pywinrm[kerberos]
+
+# Configurando o Kerberos
+vi /etc/krb5.conf
+
+[realms]
+  rbarozzi.local = {
+        kdc = AD.rbarozzi.local
+  }
+
+[domain_realm]
+    .rbarozzi.local = RBAROZZI.LOCAL
+
+```
+
+## Criar uma estrutura de teste para o playbook
+
+``` 
+#Criar uma Pasta
+mkdir windows
+cd windows
+
+#Criar um arquivo inventario.yml
+---
+all:
+  hosts:
+    lab.rbarozzi.local:
+
+#Cria o playbook.yml
+---
+- name: Criar pasta no Windows
+  hosts: lab.rbarozzi.local
+  gather_facts: no
+  tasks:
+    - name: Criar pasta "C:\teste"
+      win_shell: New-Item -Path 'C:\teste' -ItemType Directory
+
+#Criar a pasta para o host_vars
+mkdir host_vars
+cd host_vars
+
+#Criar o arquivo lab.rbarozzi.local.yml
+---
+ansible_user: rafael@RBAROZZI.LOCAL
+ansible_password: senhaaqui
+ansible_connection: winrm
+ansible_port: 5985
+ansible_winrm_transport: kerberos
+```
+
+## LDAP Config
+
+LDAP Server URI
+ldap://172.31.63.27
+
+LDAP Bind DN
+CN=adm adm,CN=Users,DC=rbarozzi,DC=local
+
+LDAP Group Type
+MemberDNGroupType
+
+LDAP Require Group
+CN=adm-awx,OU=User,DC=rbarozzi,DC=local
+
+LDAP User Search
+[
+  "OU=User,DC=rbarozzi,DC=local",
+  "SCOPE_SUBTREE",
+  "(cn=%(user)s)"
+]
+
+LDAP Group Search
+[
+  "dc=rbarozzi,dc=local",
+  "SCOPE_SUBTREE",
+  "(objectClass=group)"
+]
+
+LDAP User Attribute Map
+{
+  "first_name": "givenName",
+  "last_name": "sn",
+  "email": "mail"
+}
+
+LDAP Group Type Parameters
+{
+  "member_attr": "member",
+  "name_attr": "cn"
+}
+
+LDAP User Flags By Group
+{
+  "is_superuser": [
+    "CN=adm-awx,OU=User,DC=rbarozzi,DC=local"
+  ]
+}

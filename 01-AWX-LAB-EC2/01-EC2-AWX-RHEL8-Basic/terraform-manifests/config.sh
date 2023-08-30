@@ -109,8 +109,3 @@ sudo echo "awx_official=false" >> inventory
 
 sudo ansible-playbook -i /home/ec2-user/awx/installer/inventory /home/ec2-user/awx/installer/install.yml
 
-
-
-id -u usuario
-id -g usuario
-
